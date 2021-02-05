@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "HelloFunction": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Debug"
+      }
+    }
+  }
+}
