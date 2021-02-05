@@ -11,9 +11,8 @@ using HelloFunction.Services;
 
 namespace HelloFunction
 {
-
-    public class HelloFn
-    {
+	public class HelloFn
+	{
 		private readonly IGreeter greeter;
 
 		public HelloFn(IGreeter greeter)
@@ -21,21 +20,21 @@ namespace HelloFunction
 			this.greeter = greeter;
 		}
 
-        [FunctionName("hello")]
-        public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
-        {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+		[FunctionName("hello")]
+		public async Task<IActionResult> Run(
+			[HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+			ILogger log)
+		{
+			log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+			string name = req.Query["name"];
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
+			string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+			dynamic data = JsonConvert.DeserializeObject(requestBody);
 			name ??= data?.name;
-            var repsonse = greeter.SayHello(name);
-            return new OkObjectResult(new { repsonse });
+			var repsonse = greeter.SayHello(name);
+			return new OkObjectResult(new { repsonse });
 
-        }
-    }
+		}
+	}
 }
