@@ -27,14 +27,19 @@ namespace HelloFunction
 		{
 			log.LogInformation("C# HTTP trigger function processed a request.");
 
-			string name = req.Query["name"];
-
-			string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-			dynamic data = JsonConvert.DeserializeObject(requestBody);
-			name ??= data?.name;
+			string name = await ParseName(req);
 			var repsonse = greeter.SayHello(name);
 			return new OkObjectResult(new { repsonse });
 
+			static async Task<string> ParseName(HttpRequest req)
+			{
+				string name = req.Query["name"];
+
+				string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+				dynamic data = JsonConvert.DeserializeObject(requestBody);
+				name ??= data?.name;
+				return name;
+			}
 		}
 	}
 }
